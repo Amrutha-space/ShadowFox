@@ -1,0 +1,2591 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TechMart - Online Shopping for Electronics</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Roboto', -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
+            background: #f1f3f6;
+            color: #212121;
+        }
+
+        /* Header */
+        header {
+            background: #2874f0;
+            color: white;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.15);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .header-top {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0.8rem 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 2rem;
+        }
+
+        .logo {
+            display: flex;
+            flex-direction: column;
+            cursor: pointer;
+        }
+
+        .logo-text {
+            font-size: 1.4rem;
+            font-weight: 700;
+            font-style: italic;
+            letter-spacing: -0.5px;
+        }
+
+        .logo-subtitle {
+            font-size: 0.65rem;
+            font-style: italic;
+            opacity: 0.9;
+            margin-top: -2px;
+        }
+
+        .search-container {
+            flex: 1;
+            max-width: 600px;
+            position: relative;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 0.65rem 3rem 0.65rem 1rem;
+            border: none;
+            border-radius: 2px;
+            font-size: 0.95rem;
+            outline: none;
+            background: white;
+        }
+
+        .search-btn {
+            position: absolute;
+            right: 0;
+            top: 0;
+            bottom: 0;
+            background: white;
+            border: none;
+            padding: 0 1rem;
+            cursor: pointer;
+            color: #2874f0;
+            font-size: 1.1rem;
+        }
+
+        .header-actions {
+            display: flex;
+            gap: 2.5rem;
+            align-items: center;
+        }
+
+        .header-btn {
+            background: none;
+            border: none;
+            color: white;
+            cursor: pointer;
+            font-size: 0.9rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem;
+            transition: opacity 0.2s;
+        }
+
+        .header-btn:hover {
+            opacity: 0.85;
+        }
+
+        .cart-badge {
+            position: relative;
+        }
+
+        .cart-count {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background: #ff9f00;
+            color: white;
+            border-radius: 50%;
+            width: 18px;
+            height: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.7rem;
+            font-weight: bold;
+        }
+
+        /* Category Navigation */
+        .category-nav {
+            background: white;
+            border-bottom: 1px solid #e0e0e0;
+            position: sticky;
+            top: 57px;
+            z-index: 999;
+        }
+
+        .category-nav-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+            display: flex;
+            gap: 2rem;
+            overflow-x: auto;
+        }
+
+        .category-nav-content::-webkit-scrollbar {
+            height: 4px;
+        }
+
+        .category-nav-content::-webkit-scrollbar-thumb {
+            background: #c2c2c2;
+            border-radius: 2px;
+        }
+
+        .category-item {
+            padding: 1rem 0;
+            white-space: nowrap;
+            cursor: pointer;
+            color: #212121;
+            font-size: 0.95rem;
+            font-weight: 500;
+            border-bottom: 3px solid transparent;
+            transition: all 0.2s;
+        }
+
+        .category-item:hover {
+            color: #2874f0;
+        }
+
+        .category-item.active {
+            color: #2874f0;
+            border-bottom-color: #2874f0;
+        }
+
+        /* Banner */
+        .banner {
+            background: linear-gradient(135deg, #2874f0 0%, #1557b0 100%);
+            color: white;
+            padding: 3rem 1.5rem;
+            text-align: center;
+            margin-bottom: 1rem;
+        }
+
+        .banner h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            font-weight: 700;
+        }
+
+        .banner p {
+            font-size: 1.2rem;
+            opacity: 0.95;
+        }
+
+        .offers-strip {
+            background: white;
+            padding: 0.8rem;
+            text-align: center;
+            font-size: 0.9rem;
+            color: #878787;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .offers-strip strong {
+            color: #388e3c;
+        }
+
+        /* Main Container */
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 1rem 1.5rem;
+            display: grid;
+            grid-template-columns: 280px 1fr;
+            gap: 1rem;
+            min-height: calc(100vh - 400px);
+        }
+
+        /* Sidebar */
+        .sidebar {
+            background: white;
+            height: fit-content;
+            position: sticky;
+            top: 120px;
+        }
+
+        .filter-header {
+            padding: 1.2rem 1.5rem;
+            border-bottom: 1px solid #f0f0f0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .filter-title {
+            font-weight: 600;
+            font-size: 1.05rem;
+            color: #212121;
+        }
+
+        .clear-all {
+            color: #2874f0;
+            text-decoration: none;
+            font-size: 0.85rem;
+            font-weight: 600;
+            cursor: pointer;
+            text-transform: uppercase;
+        }
+
+        .clear-all:hover {
+            text-decoration: underline;
+        }
+
+        .filter-section {
+            border-bottom: 1px solid #f0f0f0;
+            padding: 1.2rem 1.5rem;
+        }
+
+        .filter-section-title {
+            color: #212121;
+            margin-bottom: 1rem;
+            font-size: 0.9rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .filter-option {
+            display: flex;
+            align-items: center;
+            padding: 0.5rem 0;
+            cursor: pointer;
+            font-size: 0.9rem;
+            color: #212121;
+            transition: color 0.2s;
+        }
+
+        .filter-option:hover {
+            color: #2874f0;
+        }
+
+        .filter-option input[type="checkbox"] {
+            margin-right: 0.8rem;
+            width: 17px;
+            height: 17px;
+            cursor: pointer;
+            accent-color: #2874f0;
+        }
+
+        .filter-count {
+            margin-left: auto;
+            color: #878787;
+            font-size: 0.85rem;
+        }
+
+        .price-range-container {
+            margin-top: 0.5rem;
+        }
+
+        .price-slider {
+            width: 100%;
+            height: 6px;
+            border-radius: 3px;
+            background: #e0e0e0;
+            outline: none;
+            margin: 1rem 0;
+            cursor: pointer;
+        }
+
+        .price-labels {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.85rem;
+            color: #212121;
+            font-weight: 500;
+        }
+
+        /* Products Section */
+        .products-section {
+            background: white;
+            min-height: 500px;
+        }
+
+        .products-header {
+            padding: 1.2rem 1.5rem;
+            border-bottom: 1px solid #f0f0f0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .products-info h2 {
+            font-size: 1.4rem;
+            font-weight: 500;
+            color: #212121;
+            margin-bottom: 0.3rem;
+        }
+
+        .results-info {
+            color: #878787;
+            font-size: 0.9rem;
+        }
+
+        .sort-container {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .sort-label {
+            color: #878787;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        .sort-select {
+            padding: 0.5rem 2.5rem 0.5rem 1rem;
+            border: 1px solid #c2c2c2;
+            border-radius: 2px;
+            background: white;
+            cursor: pointer;
+            font-size: 0.9rem;
+            outline: none;
+            color: #212121;
+        }
+
+        .sort-select:focus {
+            border-color: #2874f0;
+        }
+
+        /* Products Grid */
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+            gap: 0;
+        }
+
+        .product-card {
+            background: white;
+            border-right: 1px solid #f0f0f0;
+            border-bottom: 1px solid #f0f0f0;
+            padding: 1.2rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .product-card:hover {
+            box-shadow: 0 2px 16px rgba(0,0,0,0.12);
+            z-index: 10;
+        }
+
+        .wishlist-icon {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            font-size: 1.4rem;
+            cursor: pointer;
+            z-index: 10;
+            transition: transform 0.2s;
+        }
+
+        .wishlist-icon:hover {
+            transform: scale(1.15);
+        }
+
+        .wishlist-icon.active {
+            color: #ff4757;
+        }
+
+        .product-image-wrapper {
+            width: 100%;
+            height: 220px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .product-img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+            transition: transform 0.3s;
+        }
+
+        .product-card:hover .product-img {
+            transform: scale(1.05);
+        }
+
+        .discount-label {
+            position: absolute;
+            bottom: 8px;
+            left: 0;
+            background: #388e3c;
+            color: white;
+            padding: 0.25rem 0.6rem;
+            font-size: 0.75rem;
+            font-weight: 600;
+            letter-spacing: 0.3px;
+        }
+
+        .product-brand {
+            font-size: 0.85rem;
+            color: #878787;
+            margin-bottom: 0.4rem;
+            text-transform: uppercase;
+            font-weight: 500;
+        }
+
+        .product-title {
+            font-size: 1rem;
+            color: #212121;
+            margin-bottom: 0.6rem;
+            line-height: 1.4;
+            overflow: hidden;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            min-height: 44px;
+        }
+
+        .product-rating-box {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.3rem;
+            background: #388e3c;
+            color: white;
+            padding: 0.25rem 0.5rem;
+            border-radius: 3px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-bottom: 0.6rem;
+        }
+
+        .rating-star {
+            font-size: 0.7rem;
+        }
+
+        .reviews-text {
+            color: #878787;
+            font-size: 0.8rem;
+            margin-left: 0.4rem;
+        }
+
+        .price-section {
+            display: flex;
+            align-items: baseline;
+            gap: 0.6rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .current-price {
+            font-size: 1.4rem;
+            font-weight: 600;
+            color: #212121;
+        }
+
+        .original-price {
+            font-size: 0.95rem;
+            color: #878787;
+            text-decoration: line-through;
+        }
+
+        .discount-text {
+            font-size: 0.85rem;
+            color: #388e3c;
+            font-weight: 600;
+        }
+
+        .delivery-text {
+            font-size: 0.85rem;
+            color: #878787;
+            margin-bottom: 1rem;
+        }
+
+        .free-text {
+            color: #388e3c;
+            font-weight: 600;
+        }
+
+        .product-buttons {
+            display: flex;
+            gap: 0.6rem;
+            margin-top: auto;
+        }
+
+        .btn-add-cart {
+            flex: 1;
+            padding: 0.75rem;
+            background: #ff9f00;
+            color: white;
+            border: none;
+            border-radius: 2px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+        }
+
+        .btn-add-cart:hover {
+            background: #e68900;
+            box-shadow: 0 2px 8px rgba(255, 159, 0, 0.3);
+        }
+
+        .btn-add-cart:active {
+            transform: scale(0.97);
+        }
+
+        /* Cart Overlay */
+        .cart-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.6);
+            z-index: 2000;
+            animation: fadeIn 0.3s;
+        }
+
+        .cart-overlay.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        /* Cart Sidebar */
+        .cart-sidebar {
+            position: fixed;
+            right: -500px;
+            top: 0;
+            width: 450px;
+            height: 100vh;
+            background: white;
+            box-shadow: -2px 0 20px rgba(0,0,0,0.3);
+            transition: right 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+            z-index: 2001;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .cart-sidebar.open {
+            right: 0;
+        }
+
+        .cart-header {
+            padding: 1.3rem 1.5rem;
+            background: #2874f0;
+            color: white;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .cart-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+        }
+
+        .close-cart-btn {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 2rem;
+            cursor: pointer;
+            padding: 0;
+            line-height: 1;
+            transition: transform 0.2s;
+        }
+
+        .close-cart-btn:hover {
+            transform: rotate(90deg);
+        }
+
+        .cart-content {
+            flex: 1;
+            overflow-y: auto;
+            padding: 1rem;
+        }
+
+        .empty-cart-message {
+            text-align: center;
+            padding: 4rem 2rem;
+            color: #878787;
+        }
+
+        .empty-cart-icon {
+            font-size: 5rem;
+            margin-bottom: 1.5rem;
+            opacity: 0.5;
+        }
+
+        .empty-cart-message h3 {
+            font-size: 1.4rem;
+            color: #212121;
+            margin-bottom: 0.5rem;
+        }
+
+        .cart-item {
+            display: flex;
+            gap: 1rem;
+            padding: 1.2rem;
+            border-bottom: 1px solid #f0f0f0;
+            position: relative;
+            background: white;
+            transition: background 0.2s;
+        }
+
+        .cart-item:hover {
+            background: #fafafa;
+        }
+
+        .cart-item-img {
+            width: 90px;
+            height: 90px;
+            object-fit: contain;
+            flex-shrink: 0;
+            border: 1px solid #f0f0f0;
+            border-radius: 4px;
+            padding: 0.5rem;
+        }
+
+        .cart-item-info {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .cart-item-name {
+            font-size: 0.95rem;
+            color: #212121;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            line-height: 1.3;
+        }
+
+        .cart-item-price {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #212121;
+            margin-bottom: 0.8rem;
+        }
+
+        .qty-controls {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .qty-btn {
+            width: 32px;
+            height: 32px;
+            border: 1px solid #c2c2c2;
+            background: white;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1.2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+            font-weight: 600;
+            color: #212121;
+        }
+
+        .qty-btn:hover {
+            border-color: #2874f0;
+            color: #2874f0;
+            background: #f0f5ff;
+        }
+
+        .qty-btn:active {
+            transform: scale(0.9);
+        }
+
+        .qty-display {
+            font-weight: 600;
+            min-width: 35px;
+            text-align: center;
+            font-size: 1rem;
+            color: #212121;
+        }
+
+        .remove-btn {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: none;
+            border: none;
+            color: #878787;
+            cursor: pointer;
+            font-size: 1.4rem;
+            transition: color 0.2s;
+        }
+
+        .remove-btn:hover {
+            color: #ff4757;
+        }
+
+        .cart-footer {
+            padding: 1.5rem;
+            border-top: 2px solid #f0f0f0;
+            background: #fafafa;
+        }
+
+        .cart-summary {
+            margin-bottom: 1.2rem;
+        }
+
+        .summary-line {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.6rem 0;
+            font-size: 0.95rem;
+        }
+
+        .summary-line.total {
+            border-top: 1px dashed #c2c2c2;
+            margin-top: 0.6rem;
+            padding-top: 1rem;
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: #212121;
+        }
+
+        .checkout-button {
+            width: 100%;
+            padding: 1.1rem;
+            background: #fb641b;
+            color: white;
+            border: none;
+            border-radius: 2px;
+            font-size: 1.05rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .checkout-button:hover {
+            background: #e55a15;
+            box-shadow: 0 4px 12px rgba(251, 100, 27, 0.3);
+        }
+
+        .checkout-button:active {
+            transform: scale(0.98);
+        }
+
+        /* Notification */
+        .notification {
+            position: fixed;
+            top: 80px;
+            right: 20px;
+            background: white;
+            color: #212121;
+            padding: 1rem 1.5rem;
+            border-radius: 4px;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.2);
+            z-index: 5000;
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            animation: slideIn 0.3s ease;
+            border-left: 4px solid #388e3c;
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateX(400px);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        .notification-icon {
+            font-size: 1.5rem;
+            color: #388e3c;
+        }
+
+        .notification-text {
+            font-weight: 500;
+        }
+
+        /* Checkout Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.7);
+            z-index: 3000;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+            overflow-y: auto;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-box {
+            background: white;
+            border-radius: 8px;
+            max-width: 900px;
+            width: 100%;
+            max-height: 95vh;
+            overflow-y: auto;
+            animation: modalZoom 0.3s;
+        }
+
+        @keyframes modalZoom {
+            from {
+                transform: scale(0.9);
+                opacity: 0;
+            }
+            to {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        .modal-header {
+            padding: 1.5rem 2rem;
+            background: #2874f0;
+            color: white;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-radius: 8px 8px 0 0;
+        }
+
+        .modal-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+        }
+
+        .close-modal-btn {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 2rem;
+            cursor: pointer;
+            line-height: 1;
+            transition: transform 0.2s;
+        }
+
+        .close-modal-btn:hover {
+            transform: rotate(90deg);
+        }
+
+        .checkout-progress {
+            display: flex;
+            padding: 2.5rem 2rem;
+            background: #fafafa;
+            position: relative;
+        }
+
+        .progress-step {
+            flex: 1;
+            text-align: center;
+            position: relative;
+        }
+
+        .progress-step::before {
+            content: '';
+            position: absolute;
+            top: 22px;
+            left: 50%;
+            width: 100%;
+            height: 3px;
+            background: #e0e0e0;
+            z-index: 0;
+        }
+
+        .progress-step:last-child::before {
+            display: none;
+        }
+
+        .step-circle {
+            width: 45px;
+            height: 45px;
+            background: #e0e0e0;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 0.8rem;
+            font-weight: 700;
+            color: #878787;
+            transition: all 0.3s;
+            position: relative;
+            z-index: 1;
+            font-size: 1.1rem;
+        }
+
+        .progress-step.active .step-circle {
+            background: #2874f0;
+            color: white;
+            box-shadow: 0 0 0 4px #e3f2fd;
+        }
+
+        .progress-step.completed .step-circle {
+            background: #388e3c;
+            color: white;
+        }
+
+        .step-text {
+            font-size: 0.95rem;
+            color: #878787;
+            font-weight: 500;
+        }
+
+        .progress-step.active .step-text {
+            color: #2874f0;
+            font-weight: 600;
+        }
+
+        .checkout-body {
+            padding: 2.5rem 2rem;
+        }
+
+        .form-section {
+            display: none;
+        }
+
+        .form-section.active {
+            display: block;
+        }
+
+        .section-heading {
+            font-size: 1.5rem;
+            margin-bottom: 1.8rem;
+            color: #212121;
+            font-weight: 600;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 0.6rem;
+            font-size: 0.95rem;
+            color: #212121;
+            font-weight: 600;
+        }
+
+        .required {
+            color: #ff4757;
+        }
+
+        .form-input,
+        .form-select,
+        .form-textarea {
+            width: 100%;
+            padding: 0.9rem 1rem;
+            border: 1px solid #c2c2c2;
+            border-radius: 4px;
+            font-size: 0.95rem;
+            outline: none;
+            transition: all 0.2s;
+            font-family: inherit;
+        }
+
+        .form-input:focus,
+        .form-select:focus,
+        .form-textarea:focus {
+            border-color: #2874f0;
+            box-shadow: 0 0 0 3px rgba(40, 116, 240, 0.1);
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.2rem;
+        }
+
+        .payment-option {
+            padding: 1.2rem;
+            border: 2px solid #e0e0e0;
+            border-radius: 6px;
+            margin-bottom: 1rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .payment-option:hover {
+            border-color: #2874f0;
+            background: #f0f5ff;
+        }
+
+        .payment-option input[type="radio"] {
+            width: 20px;
+            height: 20px;
+            accent-color: #2874f0;
+            cursor: pointer;
+        }
+
+        .payment-label {
+            font-size: 1rem;
+            font-weight: 500;
+            color: #212121;
+        }
+
+        .order-summary-section {
+            background: #f8f9fa;
+            padding: 1.8rem;
+            border-radius: 8px;
+            margin-top: 1.5rem;
+        }
+
+        .summary-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.7rem 0;
+            font-size: 0.95rem;
+        }
+
+        .summary-item.total-line {
+            border-top: 2px dashed #c2c2c2;
+            margin-top: 0.8rem;
+            padding-top: 1.2rem;
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: #212121;
+        }
+
+        .success-section {
+            text-align: center;
+            padding: 4rem 2rem;
+        }
+
+        .success-icon {
+            font-size: 6rem;
+            color: #388e3c;
+            margin-bottom: 1.5rem;
+        }
+
+        .success-section h3 {
+            font-size: 2rem;
+            margin-bottom: 0.8rem;
+            color: #212121;
+            font-weight: 600;
+        }
+
+        .success-section p {
+            color: #878787;
+            font-size: 1.1rem;
+            line-height: 1.6;
+        }
+
+        .checkout-footer {
+            display: flex;
+            gap: 1.2rem;
+            justify-content: space-between;
+            padding: 1.8rem 2rem;
+            border-top: 2px solid #f0f0f0;
+            background: #fafafa;
+        }
+
+        .btn-back {
+            padding: 0.9rem 2.5rem;
+            background: white;
+            color: #2874f0;
+            border: 2px solid #2874f0;
+            border-radius: 4px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            text-transform: uppercase;
+            font-size: 0.95rem;
+        }
+
+        .btn-back:hover {
+            background: #2874f0;
+            color: white;
+        }
+
+        .btn-next {
+            padding: 0.9rem 2.5rem;
+            background: #fb641b;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            text-transform: uppercase;
+            font-size: 0.95rem;
+        }
+
+        .btn-next:hover {
+            background: #e55a15;
+            box-shadow: 0 4px 12px rgba(251, 100, 27, 0.3);
+        }
+
+        .btn-next:active {
+            transform: scale(0.98);
+        }
+
+        /* Loading State */
+        .loading {
+            text-align: center;
+            padding: 3rem;
+            color: #878787;
+        }
+
+        .loading-spinner {
+            width: 50px;
+            height: 50px;
+            border: 4px solid #f0f0f0;
+            border-top: 4px solid #2874f0;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 1rem;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1024px) {
+            .container {
+                grid-template-columns: 250px 1fr;
+            }
+        }
+
+        @media (max-width: 900px) {
+            .container {
+                grid-template-columns: 1fr;
+            }
+
+            .sidebar {
+                position: static;
+                margin-bottom: 1rem;
+            }
+
+            .category-nav-content {
+                gap: 1.5rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header-top {
+                flex-wrap: wrap;
+            }
+
+            .search-container {
+                order: 3;
+                flex-basis: 100%;
+            }
+
+            .banner h1 {
+                font-size: 1.8rem;
+            }
+
+            .banner p {
+                font-size: 1rem;
+            }
+
+            .products-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .cart-sidebar {
+                width: 100%;
+                right: -100%;
+            }
+
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+
+            .checkout-progress {
+                padding: 1.5rem 1rem;
+            }
+
+            .step-circle {
+                width: 35px;
+                height: 35px;
+                font-size: 0.9rem;
+            }
+
+            .step-text {
+                font-size: 0.8rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .products-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .header-actions {
+                gap: 1.5rem;
+            }
+
+            .category-item {
+                font-size: 0.85rem;
+            }
+        }
+
+        /* Product Detail Modal */
+        .product-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.7);
+            z-index: 2500;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+        }
+
+        .product-modal.active {
+            display: flex;
+        }
+
+        .product-detail-box {
+            background: white;
+            border-radius: 8px;
+            max-width: 800px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+            animation: modalZoom 0.3s;
+        }
+
+        .product-detail-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.5rem;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .product-detail-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            padding: 2rem;
+        }
+
+        .product-detail-image {
+            width: 100%;
+            height: 400px;
+            object-fit: contain;
+        }
+
+        .product-detail-info h2 {
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+            color: #212121;
+        }
+
+        .product-detail-description {
+            color: #878787;
+            line-height: 1.6;
+            margin: 1rem 0;
+        }
+
+        .product-specs {
+            margin-top: 1.5rem;
+        }
+
+        .spec-item {
+            display: flex;
+            padding: 0.8rem 0;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .spec-label {
+            font-weight: 600;
+            color: #878787;
+            min-width: 120px;
+        }
+
+        .spec-value {
+            color: #212121;
+        }
+
+        @media (max-width: 768px) {
+            .product-detail-content {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-top">
+            <div class="logo" onclick="window.location.reload()">
+                <div class="logo-text">TechMart</div>
+                <div class="logo-subtitle">Explore <span style="color: #ffe500;">Plus</span> 🌟</div>
+            </div>
+            <div class="search-container">
+                <input type="text" class="search-input" id="searchInput" placeholder="Search for products, brands and more">
+                <button class="search-btn" onclick="performSearch()">🔍</button>
+            </div>
+            <div class="header-actions">
+                <button class="header-btn" onclick="toggleCart()">
+                    <div class="cart-badge">
+                        🛒
+                        <span class="cart-count" id="cartCount">0</span>
+                    </div>
+                    Cart
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Category Navigation -->
+    <nav class="category-nav">
+        <div class="category-nav-content">
+            <div class="category-item active" data-category="all" onclick="filterByCategory('all')">All Products</div>
+            <div class="category-item" data-category="smartphones" onclick="filterByCategory('smartphones')">📱 Smartphones</div>
+            <div class="category-item" data-category="laptops" onclick="filterByCategory('laptops')">💻 Laptops</div>
+            <div class="category-item" data-category="tablets" onclick="filterByCategory('tablets')">📱 Tablets</div>
+            <div class="category-item" data-category="headphones" onclick="filterByCategory('headphones')">🎧 Audio</div>
+            <div class="category-item" data-category="watches" onclick="filterByCategory('watches')">⌚ Watches</div>
+            <div class="category-item" data-category="cameras" onclick="filterByCategory('cameras')">📷 Cameras</div>
+            <div class="category-item" data-category="gaming" onclick="filterByCategory('gaming')">🎮 Gaming</div>
+        </div>
+    </nav>
+
+    <!-- Banner -->
+    <div class="banner">
+        <h1>🎉 Mega Electronics Sale - Up to 70% OFF!</h1>
+        <p>Shop the latest tech at unbeatable prices | Free Delivery on orders above ₹500</p>
+    </div>
+
+    <div class="offers-strip">
+        <strong>Today's Deal:</strong> Extra 10% off on UPI payments | No Cost EMI available on all products
+    </div>
+
+    <!-- Main Container -->
+    <div class="container">
+        <!-- Sidebar Filters -->
+        <aside class="sidebar">
+            <div class="filter-header">
+                <span class="filter-title">Filters</span>
+                <a href="#" class="clear-all" onclick="clearAllFilters(); return false;">Clear All</a>
+            </div>
+
+            <!-- Category Filter -->
+            <div class="filter-section">
+                <div class="filter-section-title">Categories</div>
+                <label class="filter-option">
+                    <input type="checkbox" value="smartphones" onchange="applyAllFilters()">
+                    <span>Smartphones</span>
+                    <span class="filter-count" id="count-smartphones">0</span>
+                </label>
+                <label class="filter-option">
+                    <input type="checkbox" value="laptops" onchange="applyAllFilters()">
+                    <span>Laptops</span>
+                    <span class="filter-count" id="count-laptops">0</span>
+                </label>
+                <label class="filter-option">
+                    <input type="checkbox" value="tablets" onchange="applyAllFilters()">
+                    <span>Tablets</span>
+                    <span class="filter-count" id="count-tablets">0</span>
+                </label>
+                <label class="filter-option">
+                    <input type="checkbox" value="headphones" onchange="applyAllFilters()">
+                    <span>Audio Devices</span>
+                    <span class="filter-count" id="count-headphones">0</span>
+                </label>
+                <label class="filter-option">
+                    <input type="checkbox" value="watches" onchange="applyAllFilters()">
+                    <span>Smart Watches</span>
+                    <span class="filter-count" id="count-watches">0</span>
+                </label>
+                <label class="filter-option">
+                    <input type="checkbox" value="cameras" onchange="applyAllFilters()">
+                    <span>Cameras</span>
+                    <span class="filter-count" id="count-cameras">0</span>
+                </label>
+                <label class="filter-option">
+                    <input type="checkbox" value="gaming" onchange="applyAllFilters()">
+                    <span>Gaming</span>
+                    <span class="filter-count" id="count-gaming">0</span>
+                </label>
+            </div>
+
+            <!-- Price Filter -->
+            <div class="filter-section">
+                <div class="filter-section-title">Price Range</div>
+                <div class="price-range-container">
+                    <input type="range" class="price-slider" min="0" max="200000" value="200000" id="priceSlider" oninput="updatePriceDisplay(); applyAllFilters()">
+                    <div class="price-labels">
+                        <span>₹0</span>
+                        <span id="maxPriceDisplay">₹2,00,000+</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Brand Filter -->
+            <div class="filter-section">
+                <div class="filter-section-title">Brand</div>
+                <label class="filter-option">
+                    <input type="checkbox" value="apple" onchange="applyAllFilters()">
+                    <span>Apple</span>
+                </label>
+                <label class="filter-option">
+                    <input type="checkbox" value="samsung" onchange="applyAllFilters()">
+                    <span>Samsung</span>
+                </label>
+                <label class="filter-option">
+                    <input type="checkbox" value="dell" onchange="applyAllFilters()">
+                    <span>Dell</span>
+                </label>
+                <label class="filter-option">
+                    <input type="checkbox" value="sony" onchange="applyAllFilters()">
+                    <span>Sony</span>
+                </label>
+                <label class="filter-option">
+                    <input type="checkbox" value="boat" onchange="applyAllFilters()">
+                    <span>boAt</span>
+                </label>
+                <label class="filter-option">
+                    <input type="checkbox" value="canon" onchange="applyAllFilters()">
+                    <span>Canon</span>
+                </label>
+                <label class="filter-option">
+                    <input type="checkbox" value="microsoft" onchange="applyAllFilters()">
+                    <span>Microsoft</span>
+                </label>
+            </div>
+
+            <!-- Rating Filter -->
+            <div class="filter-section">
+                <div class="filter-section-title">Customer Ratings</div>
+                <label class="filter-option">
+                    <input type="checkbox" value="4" onchange="applyAllFilters()">
+                    <span>4★ & above</span>
+                </label>
+                <label class="filter-option">
+                    <input type="checkbox" value="3" onchange="applyAllFilters()">
+                    <span>3★ & above</span>
+                </label>
+                <label class="filter-option">
+                    <input type="checkbox" value="2" onchange="applyAllFilters()">
+                    <span>2★ & above</span>
+                </label>
+            </div>
+
+            <!-- Discount Filter -->
+            <div class="filter-section">
+                <div class="filter-section-title">Discount</div>
+                <label class="filter-option">
+                    <input type="checkbox" value="50" onchange="applyAllFilters()">
+                    <span>50% or more</span>
+                </label>
+                <label class="filter-option">
+                    <input type="checkbox" value="40" onchange="applyAllFilters()">
+                    <span>40% or more</span>
+                </label>
+                <label class="filter-option">
+                    <input type="checkbox" value="30" onchange="applyAllFilters()">
+                    <span>30% or more</span>
+                </label>
+                <label class="filter-option">
+                    <input type="checkbox" value="20" onchange="applyAllFilters()">
+                    <span>20% or more</span>
+                </label>
+                <label class="filter-option">
+                    <input type="checkbox" value="10" onchange="applyAllFilters()">
+                    <span>10% or more</span>
+                </label>
+            </div>
+        </aside>
+
+        <!-- Products Section -->
+        <main class="products-section">
+            <div class="products-header">
+                <div class="products-info">
+                    <h2 id="categoryTitle">All Electronics</h2>
+                    <div class="results-info">Showing <span id="productCount">0</span> products</div>
+                </div>
+                <div class="sort-container">
+                    <span class="sort-label">Sort By</span>
+                    <select class="sort-select" id="sortSelect" onchange="sortProducts()">
+                        <option value="relevance">Relevance</option>
+                        <option value="popularity">Popularity</option>
+                        <option value="price-low">Price -- Low to High</option>
+                        <option value="price-high">Price -- High to Low</option>
+                        <option value="rating">Customer Rating</option>
+                        <option value="newest">Newest First</option>
+                        <option value="discount">Discount -- High to Low</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="products-grid" id="productsGrid">
+                <!-- Products will be dynamically inserted here -->
+            </div>
+        </main>
+    </div>
+
+    <!-- Cart Overlay -->
+    <div class="cart-overlay" id="cartOverlay" onclick="toggleCart()"></div>
+
+    <!-- Cart Sidebar -->
+    <div class="cart-sidebar" id="cartSidebar">
+        <div class="cart-header">
+            <h2 class="cart-title">My Cart (<span id="cartItemCount">0</span>)</h2>
+            <button class="close-cart-btn" onclick="toggleCart()">×</button>
+        </div>
+        <div class="cart-content" id="cartContent">
+            <div class="empty-cart-message">
+                <div class="empty-cart-icon">🛒</div>
+                <h3>Your cart is empty!</h3>
+                <p>Add products to get started</p>
+            </div>
+        </div>
+        <div class="cart-footer" id="cartFooter" style="display: none;">
+            <div class="cart-summary">
+                <div class="summary-line">
+                    <span>Subtotal</span>
+                    <span id="subtotalPrice">₹0</span>
+                </div>
+                <div class="summary-line">
+                    <span>Delivery</span>
+                    <span class="free-text">FREE</span>
+                </div>
+                <div class="summary-line total">
+                    <span>Total Amount</span>
+                    <span id="totalPrice">₹0</span>
+                </div>
+            </div>
+            <button class="checkout-button" onclick="openCheckoutModal()">Place Order</button>
+        </div>
+    </div>
+
+    <!-- Checkout Modal -->
+    <div class="modal" id="checkoutModal">
+        <div class="modal-box">
+            <div class="modal-header">
+                <h2 class="modal-title">Secure Checkout</h2>
+                <button class="close-modal-btn" onclick="closeCheckoutModal()">×</button>
+            </div>
+
+            <div class="checkout-progress">
+                <div class="progress-step active" data-step="1">
+                    <div class="step-circle">1</div>
+                    <div class="step-text">Address</div>
+                </div>
+                <div class="progress-step" data-step="2">
+                    <div class="step-circle">2</div>
+                    <div class="step-text">Payment</div>
+                </div>
+                <div class="progress-step" data-step="3">
+                    <div class="step-circle">3</div>
+                    <div class="step-text">Summary</div>
+                </div>
+            </div>
+
+            <div class="checkout-body">
+                <!-- Step 1: Address -->
+                <div class="form-section active" data-section="1">
+                    <h3 class="section-heading">Delivery Address</h3>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label">First Name <span class="required">*</span></label>
+                            <input type="text" class="form-input" id="firstName" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Last Name <span class="required">*</span></label>
+                            <input type="text" class="form-input" id="lastName" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Mobile Number <span class="required">*</span></label>
+                        <input type="tel" class="form-input" placeholder="10-digit mobile number" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Email Address <span class="required">*</span></label>
+                        <input type="email" class="form-input" placeholder="example@email.com" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Address <span class="required">*</span></label>
+                        <textarea class="form-textarea" rows="3" placeholder="House No., Building Name, Street" required></textarea>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label">Landmark</label>
+                            <input type="text" class="form-input" placeholder="E.g. Near Apollo Hospital">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Pincode <span class="required">*</span></label>
+                            <input type="text" class="form-input" placeholder="6-digit pincode" required>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label">City <span class="required">*</span></label>
+                            <input type="text" class="form-input" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">State <span class="required">*</span></label>
+                            <select class="form-select" required>
+                                <option value="">Select State</option>
+                                <option>Andhra Pradesh</option>
+                                <option>Karnataka</option>
+                                <option>Kerala</option>
+                                <option>Maharashtra</option>
+                                <option>Tamil Nadu</option>
+                                <option>Telangana</option>
+                                <option>West Bengal</option>
+                                <option>Delhi</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Step 2: Payment -->
+                <div class="form-section" data-section="2">
+                    <h3 class="section-heading">Payment Method</h3>
+                    <div class="payment-option">
+                        <input type="radio" name="payment" value="upi" id="upi" checked>
+                        <label class="payment-label" for="upi">💳 UPI / QR Code Payment</label>
+                    </div>
+                    <div class="payment-option">
+                        <input type="radio" name="payment" value="card" id="card">
+                        <label class="payment-label" for="card">💳 Credit / Debit Card</label>
+                    </div>
+                    <div class="payment-option">
+                        <input type="radio" name="payment" value="netbanking" id="netbanking">
+                        <label class="payment-label" for="netbanking">🏦 Net Banking</label>
+                    </div>
+                    <div class="payment-option">
+                        <input type="radio" name="payment" value="cod" id="cod">
+                        <label class="payment-label" for="cod">💵 Cash on Delivery</label>
+                    </div>
+                    <div class="payment-option">
+                        <input type="radio" name="payment" value="emi" id="emi">
+                        <label class="payment-label" for="emi">📊 No Cost EMI</label>
+                    </div>
+                </div>
+
+                <!-- Step 3: Summary -->
+                <div class="form-section" data-section="3">
+                    <h3 class="section-heading">Order Summary</h3>
+                    <div class="order-summary-section">
+                        <div id="orderReviewItems"></div>
+                        <div class="summary-item">
+                            <span>Subtotal</span>
+                            <span id="reviewSubtotal">₹0</span>
+                        </div>
+                        <div class="summary-item">
+                            <span>Delivery Charges</span>
+                            <span class="free-text">FREE</span>
+                        </div>
+                        <div class="summary-item">
+                            <span>Discount</span>
+                            <span class="free-text" id="reviewDiscount">-₹0</span>
+                        </div>
+                        <div class="summary-item total-line">
+                            <span>Total Amount</span>
+                            <span id="reviewTotal">₹0</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Step 4: Success -->
+                <div class="form-section" data-section="4">
+                    <div class="success-section">
+                        <div class="success-icon">✅</div>
+                        <h3>Order Placed Successfully!</h3>
+                        <p>Thank you for shopping with TechMart</p>
+                        <p>Your order <strong id="orderNumber"></strong> will be delivered within 3-5 business days.</p>
+                        <p style="margin-top: 1rem;">You will receive an email confirmation shortly.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="checkout-footer" id="checkoutFooter">
+                <button class="btn-back" id="backBtn" onclick="previousCheckoutStep()">← Back</button>
+                <button class="btn-next" id="continueBtn" onclick="nextCheckoutStep()">Continue →</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Product Detail Modal -->
+    <div class="product-modal" id="productModal">
+        <div class="product-detail-box">
+            <div class="product-detail-header">
+                <h2>Product Details</h2>
+                <button class="close-modal-btn" onclick="closeProductModal()">×</button>
+            </div>
+            <div class="product-detail-content" id="productDetailContent">
+                <!-- Product details will be inserted here -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Complete product database with more variety
+        const allProducts = [
+            // Smartphones
+            {
+                id: 1,
+                name: "iPhone 14 Pro Max 256GB",
+                brand: "apple",
+                category: "smartphones",
+                price: 139900,
+                originalPrice: 159900,
+                rating: 4.7,
+                reviews: 12450,
+                discount: 13,
+                image: "https://images.unsplash.com/photo-1678652197950-57138a1f4f3b?w=500&h=500&fit=crop",
+                delivery: "Free delivery by Tomorrow",
+                description: "Experience the pinnacle of smartphone technology with the iPhone 14 Pro Max featuring Dynamic Island, Always-On display, and Pro camera system."
+            },
+            {
+                id: 2,
+                name: "Samsung Galaxy S23 Ultra 5G",
+                brand: "samsung",
+                category: "smartphones",
+                price: 124999,
+                originalPrice: 149999,
+                rating: 4.6,
+                reviews: 9876,
+                discount: 17,
+                image: "https://images.unsplash.com/photo-1610945415295-d9bbf067e59c?w=500&h=500&fit=crop",
+                delivery: "Free delivery",
+                description: "The ultimate smartphone with 200MP camera, S Pen, and powerful performance for professionals and creators."
+            },
+            {
+                id: 3,
+                name: "Samsung Galaxy A54 5G",
+                brand: "samsung",
+                category: "smartphones",
+                price: 38999,
+                originalPrice: 47999,
+                rating: 4.4,
+                reviews: 5432,
+                discount: 19,
+                image: "https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=500&h=500&fit=crop",
+                delivery: "Free delivery by Tomorrow",
+                description: "Premium mid-range smartphone with vibrant display and versatile camera system at an affordable price."
+            },
+
+            // Laptops
+            {
+                id: 4,
+                name: "MacBook Pro M2 14-inch",
+                brand: "apple",
+                category: "laptops",
+                price: 189900,
+                originalPrice: 199900,
+                rating: 4.8,
+                reviews: 6543,
+                discount: 5,
+                image: "https://images.unsplash.com/photo-1517336714731-489689fd1ca8?w=500&h=500&fit=crop",
+                delivery: "Free delivery",
+                description: "Supercharged by M2 Pro or M2 Max chip. Game-changing battery life. Stunning Liquid Retina XDR display."
+            },
+            {
+                id: 5,
+                name: "Dell XPS 15 Intel i7",
+                brand: "dell",
+                category: "laptops",
+                price: 154900,
+                originalPrice: 184900,
+                rating: 4.5,
+                reviews: 4321,
+                discount: 16,
+                image: "https://images.unsplash.com/photo-1593642632823-8f785ba67e45?w=500&h=500&fit=crop",
+                delivery: "Delivery in 2 days",
+                description: "Premium Windows laptop with stunning InfinityEdge display and powerful performance for creators."
+            },
+            {
+                id: 6,
+                name: "Dell Inspiron 14 5000",
+                brand: "dell",
+                category: "laptops",
+                price: 54990,
+                originalPrice: 74990,
+                rating: 4.2,
+                reviews: 3210,
+                discount: 27,
+                image: "https://images.unsplash.com/photo-1588872657578-7efd1f1555ed?w=500&h=500&fit=crop",
+                delivery: "Delivery in 3 days",
+                description: "Reliable everyday laptop perfect for students and professionals with long battery life."
+            },
+
+            // Tablets
+            {
+                id: 7,
+                name: "iPad Pro 12.9-inch M2",
+                brand: "apple",
+                category: "tablets",
+                price: 109900,
+                originalPrice: 129900,
+                rating: 4.7,
+                reviews: 5678,
+                discount: 15,
+                image: "https://images.unsplash.com/photo-1544244015-0df4b3ffc6b0?w=500&h=500&fit=crop",
+                delivery: "Free delivery by Tomorrow",
+                description: "Ultimate iPad experience with M2 chip, stunning Liquid Retina XDR display, and all-day battery life."
+            },
+            {
+                id: 8,
+                name: "Samsung Galaxy Tab S8+ 5G",
+                brand: "samsung",
+                category: "tablets",
+                price: 64999,
+                originalPrice: 82999,
+                rating: 4.4,
+                reviews: 3456,
+                discount: 22,
+                image: "https://images.unsplash.com/photo-1585789575231-4ab5d0dd8b9c?w=500&h=500&fit=crop",
+                delivery: "Free delivery",
+                description: "Premium Android tablet with S Pen included, perfect for productivity and entertainment."
+            },
+            {
+                id: 9,
+                name: "Samsung Galaxy Tab A8",
+                brand: "samsung",
+                category: "tablets",
+                price: 17999,
+                originalPrice: 23999,
+                rating: 4.1,
+                reviews: 2345,
+                discount: 25,
+                image: "https://images.unsplash.com/photo-1544244015-0df4b3ffc6b0?w=500&h=500&fit=crop",
+                delivery: "Free delivery by Tomorrow",
+                description: "Affordable entertainment tablet with large display and long battery life for the whole family."
+            },
+
+            // Headphones & Audio
+            {
+                id: 10,
+                name: "Sony WH-1000XM5 Wireless",
+                brand: "sony",
+                category: "headphones",
+                price: 29990,
+                originalPrice: 34990,
+                rating: 4.8,
+                reviews: 15678,
+                discount: 14,
+                image: "https://images.unsplash.com/photo-1546435770-a3e426bf472b?w=500&h=500&fit=crop",
+                delivery: "Free delivery",
+                description: "Industry-leading noise cancellation with exceptional sound quality and 30-hour battery life."
+            },
+            {
+                id: 11,
+                name: "boAt Airdopes 141 TWS",
+                brand: "boat",
+                category: "headphones",
+                price: 1299,
+                originalPrice: 2990,
+                rating: 4.0,
+                reviews: 54321,
+                discount: 57,
+                image: "https://images.unsplash.com/photo-1590658165737-15a047b7a778?w=500&h=500&fit=crop",
+                delivery: "Free delivery by Tomorrow",
+                description: "Budget-friendly true wireless earbuds with decent sound quality and IPX4 water resistance."
+            },
+            {
+                id: 12,
+                name: "Samsung Galaxy Buds2 Pro",
+                brand: "samsung",
+                category: "headphones",
+                price: 14999,
+                originalPrice: 17999,
+                rating: 4.5,
+                reviews: 7890,
+                discount: 17,
+                image: "https://images.unsplash.com/photo-1606841837239-c5a1a4a07af7?w=500&h=500&fit=crop",
+                delivery: "Free delivery",
+                description: "Premium TWS earbuds with intelligent ANC and 360° audio for immersive listening."
+            },
+
+            // Smart Watches
+            {
+                id: 13,
+                name: "Apple Watch Series 8 GPS",
+                brand: "apple",
+                category: "watches",
+                price: 45900,
+                originalPrice: 49900,
+                rating: 4.7,
+                reviews: 5432,
+                discount: 8,
+                image: "https://images.unsplash.com/photo-1579586337278-3befd40fd17a?w=500&h=500&fit=crop",
+                delivery: "Free delivery",
+                description: "Advanced health features including temperature sensing, crash detection, and ECG capability."
+            },
+            {
+                id: 14,
+                name: "Samsung Galaxy Watch 5 Pro",
+                brand: "samsung",
+                category: "watches",
+                price: 39999,
+                originalPrice: 46999,
+                rating: 4.5,
+                reviews: 3456,
+                discount: 15,
+                image: "https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=500&h=500&fit=crop",
+                delivery: "Free delivery by Tomorrow",
+                description: "Rugged smartwatch with sapphire crystal display and advanced fitness tracking features."
+            },
+
+            // Cameras
+            {
+                id: 15,
+                name: "Canon EOS R6 Mark II Body",
+                brand: "canon",
+                category: "cameras",
+                price: 234990,
+                originalPrice: 259990,
+                rating: 4.9,
+                reviews: 1234,
+                discount: 10,
+                image: "https://images.unsplash.com/photo-1606933248010-ef7842e31f1d?w=500&h=500&fit=crop",
+                delivery: "Free delivery",
+                description: "Professional full-frame mirrorless camera with 24.2MP sensor and advanced autofocus system."
+            },
+            {
+                id: 16,
+                name: "Sony Alpha 7 IV Full Frame",
+                brand: "sony",
+                category: "cameras",
+                price: 209990,
+                originalPrice: 239990,
+                rating: 4.8,
+                reviews: 2345,
+                discount: 13,
+                image: "https://images.unsplash.com/photo-1502920917128-1aa500764cbd?w=500&h=500&fit=crop",
+                delivery: "Free delivery",
+                description: "Versatile hybrid camera perfect for both photography and videography professionals."
+            },
+            {
+                id: 17,
+                name: "Canon EOS 1500D DSLR",
+                brand: "canon",
+                category: "cameras",
+                price: 31990,
+                originalPrice: 39990,
+                rating: 4.3,
+                reviews: 6789,
+                discount: 20,
+                image: "https://images.unsplash.com/photo-1516035069371-29a1b244cc32?w=500&h=500&fit=crop",
+                delivery: "Delivery in 2 days",
+                description: "Entry-level DSLR perfect for beginners with 24.1MP sensor and built-in WiFi."
+            },
+
+            // Gaming
+            {
+                id: 18,
+                name: "Sony PlayStation 5 Console",
+                brand: "sony",
+                category: "gaming",
+                price: 49990,
+                originalPrice: 54990,
+                rating: 4.9,
+                reviews: 23456,
+                discount: 9,
+                image: "https://images.unsplash.com/photo-1606813907291-d86efa9b94db?w=500&h=500&fit=crop",
+                delivery: "Free delivery by Tomorrow",
+                description: "Next-gen gaming console with ultra-high speed SSD and stunning 4K graphics at 120fps."
+            },
+            {
+                id: 19,
+                name: "Microsoft Xbox Series X",
+                brand: "microsoft",
+                category: "gaming",
+                price: 52990,
+                originalPrice: 54990,
+                rating: 4.8,
+                reviews: 18765,
+                discount: 4,
+                image: "https://images.unsplash.com/photo-1621259182978-fbf93132d53d?w=500&h=500&fit=crop",
+                delivery: "Free delivery",
+                description: "Most powerful Xbox ever with 12 teraflops of processing power and quick resume feature."
+            },
+            {
+                id: 20,
+                name: "Sony DualSense Controller",
+                brand: "sony",
+                category: "gaming",
+                price: 5990,
+                originalPrice: 6990,
+                rating: 4.6,
+                reviews: 9876,
+                discount: 14,
+                image: "https://images.unsplash.com/photo-1592840496694-26d035b52b48?w=500&h=500&fit=crop",
+                delivery: "Free delivery by Tomorrow",
+                description: "Haptic feedback and adaptive triggers bring gaming to life with immersive sensations."
+            }
+        ];
+
+        let filteredProducts = [...allProducts];
+        let shoppingCart = [];
+        let currentCheckoutStep = 1;
+        let currentCategory = 'all';
+        let wishlist = [];
+
+        // Initialize page
+        function initializePage() {
+            updateCategoryCounts();
+            displayProducts(filteredProducts);
+            updateCartDisplay();
+        }
+
+        // Display products
+        function displayProducts(products) {
+            const grid = document.getElementById('productsGrid');
+            document.getElementById('productCount').textContent = products.length;
+
+            if (products.length === 0) {
+                grid.innerHTML = `
+                    <div class="loading" style="grid-column: 1/-1;">
+                        <h3>No products found</h3>
+                        <p>Try adjusting your filters</p>
+                    </div>
+                `;
+                return;
+            }
+
+            grid.innerHTML = products.map(product => `
+                <div class="product-card" onclick="openProductDetail(${product.id})">
+                    <div class="wishlist-icon ${wishlist.includes(product.id) ? 'active' : ''}" 
+                         onclick="event.stopPropagation(); toggleWishlist(${product.id})">
+                        ${wishlist.includes(product.id) ? '❤️' : '🤍'}
+                    </div>
+                    <div class="product-image-wrapper">
+                        <img src="${product.image}" alt="${product.name}" class="product-img" loading="lazy">
+                        <div class="discount-label">${product.discount}% OFF</div>
+                    </div>
+                    <div class="product-brand">${product.brand}</div>
+                    <div class="product-title">${product.name}</div>
+                    <div class="product-rating-box">
+                        <span class="rating-star">★</span>
+                        <span>${product.rating}</span>
+                    </div>
+                    <span class="reviews-text">(${product.reviews.toLocaleString()})</span>
+                    <div class="price-section">
+                        <span class="current-price">₹${product.price.toLocaleString()}</span>
+                        <span class="original-price">₹${product.originalPrice.toLocaleString()}</span>
+                        <span class="discount-text">${product.discount}% off</span>
+                    </div>
+                    <div class="delivery-text">
+                        <span class="free-text">${product.delivery}</span>
+                    </div>
+                    <div class="product-buttons">
+                        <button class="btn-add-cart" onclick="event.stopPropagation(); addToCart(${product.id})">
+                            Add to Cart
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Filter by category
+        function filterByCategory(category) {
+            currentCategory = category;
+            
+            // Update active category
+            document.querySelectorAll('.category-item').forEach(item => {
+                item.classList.remove('active');
+            });
+            event.target.classList.add('active');
+
+            // Update title
+            const titles = {
+                'all': 'All Electronics',
+                'smartphones': 'Smartphones',
+                'laptops': 'Laptops',
+                'tablets': 'Tablets',
+                'headphones': 'Audio Devices',
+                'watches': 'Smart Watches',
+                'cameras': 'Cameras',
+                'gaming': 'Gaming Consoles & Accessories'
+            };
+            document.getElementById('categoryTitle').textContent = titles[category];
+
+            applyAllFilters();
+        }
+
+        // Apply all filters
+        function applyAllFilters() {
+            const selectedCategories = Array.from(document.querySelectorAll('.filter-section input[value="smartphones"], input[value="laptops"], input[value="tablets"], input[value="headphones"], input[value="watches"], input[value="cameras"], input[value="gaming"]'))
+                .filter(cb => cb.checked)
+                .map(cb => cb.value);
+
+            const selectedBrands = Array.from(document.querySelectorAll('.filter-section input[value="apple"], input[value="samsung"], input[value="dell"], input[value="sony"], input[value="boat"], input[value="canon"], input[value="microsoft"]'))
+                .filter(cb => cb.checked)
+                .map(cb => cb.value);
+
+            const selectedRatings = Array.from(document.querySelectorAll('.filter-section input[value="4"], input[value="3"], input[value="2"]'))
+                .filter(cb => cb.checked)
+                .map(cb => parseFloat(cb.value));
+
+            const selectedDiscounts = Array.from(document.querySelectorAll('.filter-section input[value="50"], input[value="40"], input[value="30"], input[value="20"], input[value="10"]'))
+                .filter(cb => cb.checked)
+                .map(cb => parseInt(cb.value));
+
+            const maxPrice = parseInt(document.getElementById('priceSlider').value);
+
+            filteredProducts = allProducts.filter(product => {
+                // Category filter (from top nav or sidebar)
+                const categoryMatch = currentCategory === 'all' || product.category === currentCategory;
+                const sidebarCategoryMatch = selectedCategories.length === 0 || selectedCategories.includes(product.category);
+                
+                // Brand filter
+                const brandMatch = selectedBrands.length === 0 || selectedBrands.includes(product.brand);
+                
+                // Rating filter
+                const ratingMatch = selectedRatings.length === 0 || selectedRatings.some(rating => product.rating >= rating);
+                
+                // Discount filter
+                const discountMatch = selectedDiscounts.length === 0 || selectedDiscounts.some(discount => product.discount >= discount);
+                
+                // Price filter
+                const priceMatch = product.price <= maxPrice;
+
+                return categoryMatch && sidebarCategoryMatch && brandMatch && ratingMatch && discountMatch && priceMatch;
+            });
+
+            displayProducts(filteredProducts);
+        }
+
+        // Sort products
+        function sortProducts() {
+            const sortValue = document.getElementById('sortSelect').value;
+
+            switch(sortValue) {
+                case 'price-low':
+                    filteredProducts.sort((a, b) => a.price - b.price);
+                    break;
+                case 'price-high':
+                    filteredProducts.sort((a, b) => b.price - a.price);
+                    break;
+                case 'rating':
+                    filteredProducts.sort((a, b) => b.rating - a.rating);
+                    break;
+                case 'popularity':
+                    filteredProducts.sort((a, b) => b.reviews - a.reviews);
+                    break;
+                case 'discount':
+                    filteredProducts.sort((a, b) => b.discount - a.discount);
+                    break;
+                case 'newest':
+                    filteredProducts.sort((a, b) => b.id - a.id);
+                    break;
+                default:
+                    filteredProducts.sort((a, b) => a.id - b.id);
+            }
+
+            displayProducts(filteredProducts);
+        }
+
+        // Update price display
+        function updatePriceDisplay() {
+            const value = parseInt(document.getElementById('priceSlider').value);
+            document.getElementById('maxPriceDisplay').textContent = value >= 200000 ? '₹2,00,000+' : `₹${value.toLocaleString()}`;
+        }
+
+        // Clear all filters
+        function clearAllFilters() {
+            document.querySelectorAll('.filter-section input[type="checkbox"]').forEach(cb => cb.checked = false);
+            document.getElementById('priceSlider').value = 200000;
+            updatePriceDisplay();
+            currentCategory = 'all';
+            
+            document.querySelectorAll('.category-item').forEach(item => item.classList.remove('active'));
+            document.querySelector('.category-item[data-category="all"]').classList.add('active');
+            
+            document.getElementById('categoryTitle').textContent = 'All Electronics';
+            
+            filteredProducts = [...allProducts];
+            displayProducts(filteredProducts);
+        }
+
+        // Update category counts
+        function updateCategoryCounts() {
+            const categories = ['smartphones', 'laptops', 'tablets', 'headphones', 'watches', 'cameras', 'gaming'];
+            categories.forEach(cat => {
+                const count = allProducts.filter(p => p.category === cat).length;
+                const countEl = document.getElementById(`count-${cat}`);
+                if (countEl) countEl.textContent = count;
+            });
+        }
+
+        // Search functionality
+        function performSearch() {
+            const searchTerm = document.getElementById('searchInput').value.toLowerCase().trim();
+            
+            if (searchTerm === '') {
+                filteredProducts = [...allProducts];
+            } else {
+                filteredProducts = allProducts.filter(product =>
+                    product.name.toLowerCase().includes(searchTerm) ||
+                    product.brand.toLowerCase().includes(searchTerm) ||
+                    product.category.toLowerCase().includes(searchTerm) ||
+                    product.description.toLowerCase().includes(searchTerm)
+                );
+            }
+            
+            displayProducts(filteredProducts);
+            showNotification(`Found ${filteredProducts.length} results for "${searchTerm}"`);
+        }
+
+        // Search on Enter key
+        document.getElementById('searchInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                performSearch();
+            }
+        });
+
+        // Real-time search
+        document.getElementById('searchInput').addEventListener('input', function(e) {
+            if (e.target.value.length > 2 || e.target.value.length === 0) {
+                performSearch();
+            }
+        });
+
+        // Toggle wishlist
+        function toggleWishlist(productId) {
+            const index = wishlist.indexOf(productId);
+            if (index > -1) {
+                wishlist.splice(index, 1);
+                showNotification('Removed from wishlist');
+            } else {
+                wishlist.push(productId);
+                showNotification('Added to wishlist ❤️');
+            }
+            displayProducts(filteredProducts);
+        }
+
+        // Add to cart
+        function addToCart(productId) {
+            const product = allProducts.find(p => p.id === productId);
+            const existingItem = shoppingCart.find(item => item.id === productId);
+
+            if (existingItem) {
+                existingItem.quantity++;
+                showNotification('Quantity updated in cart');
+            } else {
+                shoppingCart.push({ ...product, quantity: 1 });
+                showNotification('Added to cart! 🛒');
+            }
+
+            updateCartDisplay();
+        }
+
+        // Update cart display
+        function updateCartDisplay() {
+            const cartContent = document.getElementById('cartContent');
+            const cartFooter = document.getElementById('cartFooter');
+            const cartCount = document.getElementById('cartCount');
+            const cartItemCount = document.getElementById('cartItemCount');
+
+            const totalItems = shoppingCart.reduce((sum, item) => sum + item.quantity, 0);
+            cartCount.textContent = totalItems;
+            cartItemCount.textContent = totalItems;
+
+            if (shoppingCart.length === 0) {
+                cartContent.innerHTML = `
+                    <div class="empty-cart-message">
+                        <div class="empty-cart-icon">🛒</div>
+                        <h3>Your cart is empty!</h3>
+                        <p>Add products to get started</p>
+                    </div>
+                `;
+                cartFooter.style.display = 'none';
+                return;
+            }
+
+            cartFooter.style.display = 'block';
+
+            cartContent.innerHTML = shoppingCart.map(item => `
+                <div class="cart-item">
+                    <img src="${item.image}" alt="${item.name}" class="cart-item-img">
+                    <div class="cart-item-info">
+                        <div class="cart-item-name">${item.name}</div>
+                        <div class="cart-item-price">₹${item.price.toLocaleString()}</div>
+                        <div class="qty-controls">
+                            <button class="qty-btn" onclick="updateQuantity(${item.id}, -1)">−</button>
+                            <span class="qty-display">${item.quantity}</span>
+                            <button class="qty-btn" onclick="updateQuantity(${item.id}, 1)">+</button>
+                        </div>
+                    </div>
+                    <button class="remove-btn" onclick="removeFromCart(${item.id})">×</button>
+                </div>
+            `).join('');
+
+            const subtotal = shoppingCart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+            document.getElementById('subtotalPrice').textContent = `₹${subtotal.toLocaleString()}`;
+            document.getElementById('totalPrice').textContent = `₹${subtotal.toLocaleString()}`;
+        }
+
+        // Update quantity
+        function updateQuantity(productId, change) {
+            const item = shoppingCart.find(item => item.id === productId);
+            if (item) {
+                item.quantity += change;
+                if (item.quantity <= 0) {
+                    removeFromCart(productId);
+                } else {
+                    updateCartDisplay();
+                }
+            }
+        }
+
+        // Remove from cart
+        function removeFromCart(productId) {
+            shoppingCart = shoppingCart.filter(item => item.id !== productId);
+            updateCartDisplay();
+            showNotification('Item removed from cart');
+        }
+
+        // Toggle cart
+        function toggleCart() {
+            const sidebar = document.getElementById('cartSidebar');
+            const overlay = document.getElementById('cartOverlay');
+            sidebar.classList.toggle('open');
+            overlay.classList.toggle('active');
+        }
+
+        // Show notification
+        function showNotification(message) {
+            const notification = document.createElement('div');
+            notification.className = 'notification';
+            notification.innerHTML = `
+                <div class="notification-icon">✓</div>
+                <div class="notification-text">${message}</div>
+            `;
+            document.body.appendChild(notification);
+
+            setTimeout(() => {
+                notification.style.animation = 'slideOut 0.3s ease';
+                setTimeout(() => notification.remove(), 300);
+            }, 2500);
+        }
+
+        // Checkout functions
+        function openCheckoutModal() {
+            if (shoppingCart.length === 0) {
+                showNotification('Your cart is empty!');
+                return;
+            }
+            document.getElementById('checkoutModal').classList.add('active');
+            updateCheckoutSummary();
+            currentCheckoutStep = 1;
+            updateCheckoutStepDisplay();
+        }
+
+        function closeCheckoutModal() {
+            document.getElementById('checkoutModal').classList.remove('active');
+            currentCheckoutStep = 1;
+            updateCheckoutStepDisplay();
+        }
+
+        function nextCheckoutStep() {
+            if (currentCheckoutStep < 3) {
+                currentCheckoutStep++;
+                updateCheckoutStepDisplay();
+            } else if (currentCheckoutStep === 3) {
+                // Place order
+                currentCheckoutStep = 4;
+                updateCheckoutStepDisplay();
+                document.getElementById('checkoutFooter').style.display = 'none';
+                
+                const orderNum = 'TM' + Date.now().toString().slice(-8);
+                document.getElementById('orderNumber').textContent = `#${orderNum}`;
+                
+                setTimeout(() => {
+                    shoppingCart = [];
+                    updateCartDisplay();
+                    setTimeout(() => {
+                        closeCheckoutModal();
+                        document.getElementById('checkoutFooter').style.display = 'flex';
+                        showNotification('Order placed successfully! 🎉');
+                    }, 3000);
+                }, 2000);
+            }
+        }
+
+        function previousCheckoutStep() {
+            if (currentCheckoutStep > 1) {
+                currentCheckoutStep--;
+                updateCheckoutStepDisplay();
+            }
+        }
+
+        function updateCheckoutStepDisplay() {
+            document.querySelectorAll('.progress-step').forEach((step, index) => {
+                const stepNum = index + 1;
+                if (stepNum < currentCheckoutStep) {
+                    step.classList.add('completed');
+                    step.classList.remove('active');
+                } else if (stepNum === currentCheckoutStep) {
+                    step.classList.add('active');
+                    step.classList.remove('completed');
+                } else {
+                    step.classList.remove('active', 'completed');
+                }
+            });
+
+            document.querySelectorAll('.form-section').forEach((section, index) => {
+                section.classList.toggle('active', index + 1 === currentCheckoutStep);
+            });
+
+            const backBtn = document.getElementById('backBtn');
+            const continueBtn = document.getElementById('continueBtn');
+            
+            backBtn.style.display = currentCheckoutStep === 1 ? 'none' : 'block';
+            
+            if (currentCheckoutStep === 3) {
+                continueBtn.textContent = 'Place Order';
+            } else {
+                continueBtn.textContent = 'Continue →';
+            }
+        }
+
+        function updateCheckoutSummary() {
+            const reviewItems = document.getElementById('orderReviewItems');
+            const subtotal = shoppingCart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+            const savedAmount = shoppingCart.reduce((sum, item) => sum + ((item.originalPrice - item.price) * item.quantity), 0);
+
+            reviewItems.innerHTML = shoppingCart.map(item => `
+                <div class="summary-item">
+                    <span>${item.name} × ${item.quantity}</span>
+                    <span>₹${(item.price * item.quantity).toLocaleString()}</span>
+                </div>
+            `).join('');
+
+            document.getElementById('reviewSubtotal').textContent = `₹${subtotal.toLocaleString()}`;
+            document.getElementById('reviewDiscount').textContent = `-₹${savedAmount.toLocaleString()}`;
+            document.getElementById('reviewTotal').textContent = `₹${subtotal.toLocaleString()}`;
+        }
+
+        // Product detail modal
+        function openProductDetail(productId) {
+            const product = allProducts.find(p => p.id === productId);
+            const modal = document.getElementById('productModal');
+            const content = document.getElementById('productDetailContent');
+
+            content.innerHTML = `
+                <div>
+                    <img src="${product.image}" alt="${product.name}" class="product-detail-image">
+                </div>
+                <div class="product-detail-info">
+                    <h2>${product.name}</h2>
+                    <div class="product-rating-box" style="display: inline-flex; margin: 1rem 0;">
+                        <span class="rating-star">★</span>
+                        <span>${product.rating}</span>
+                    </div>
+                    <span class="reviews-text">(${product.reviews.toLocaleString()} reviews)</span>
+                    
+                    <div class="price-section" style="margin: 1.5rem 0;">
+                        <span class="current-price">₹${product.price.toLocaleString()}</span>
+                        <span class="original-price">₹${product.originalPrice.toLocaleString()}</span>
+                        <span class="discount-text">${product.discount}% off</span>
+                    </div>
+                    
+                    <div class="product-detail-description">
+                        <h3 style="margin-bottom: 0.5rem;">About this product</h3>
+                        <p>${product.description}</p>
+                    </div>
+                    
+                    <div class="product-specs">
+                        <h3 style="margin-bottom: 1rem;">Specifications</h3>
+                        <div class="spec-item">
+                            <span class="spec-label">Brand</span>
+                            <span class="spec-value">${product.brand.charAt(0).toUpperCase() + product.brand.slice(1)}</span>
+                        </div>
+                        <div class="spec-item">
+                            <span class="spec-label">Category</span>
+                            <span class="spec-value">${product.category.charAt(0).toUpperCase() + product.category.slice(1)}</span>
+                        </div>
+                        <div class="spec-item">
+                            <span class="spec-label">Delivery</span>
+                            <span class="spec-value">${product.delivery}</span>
+                        </div>
+                    </div>
+                    
+                    <div class="product-buttons" style="margin-top: 2rem;">
+                        <button class="btn-add-cart" onclick="addToCart(${product.id}); closeProductModal();">
+                            Add to Cart
+                        </button>
+                    </div>
+                </div>
+            `;
+
+            modal.classList.add('active');
+        }
+
+        function closeProductModal() {
+            document.getElementById('productModal').classList.remove('active');
+        }
+
+        // Close modals on outside click
+        document.getElementById('productModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeProductModal();
+            }
+        });
+
+        document.getElementById('checkoutModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeCheckoutModal();
+            }
+        });
+
+        // Initialize page on load
+        initializePage();
+    </script>
+</body>
+</html>
+            
