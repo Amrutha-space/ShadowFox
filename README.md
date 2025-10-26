@@ -16,5 +16,5 @@ A modern and minimal personal portfolio website built using HTML, CSS, and JavaS
 - CSS
 - JavaScript
 
-## 📸 Preview
-(Add a screenshot of your portfolio here if you want)
+  
+
