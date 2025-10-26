@@ -25,7 +25,7 @@ A modern and minimal personal portfolio website built using HTML, CSS, and JavaS
   improving product filtering, sorting mechanisms and checkout process
 
   ## 🚀 Live Demo
-[Click here to view the live site]
+[Click here to view the live site] (https://amrutha-space.github.io/ShadowFox/)
 
   
 
