@@ -6,15 +6,15 @@
 A modern and minimal personal portfolio website built using HTML, CSS, and JavaScript.
 
 ## 🚀 Live Demo
-[Click here to view the live site](https://amrutha-space.github.io/ShadowFox/)
+[Click here to view the live site](https://github.com/Amrutha-space/ShadowFox/blob/main/TASK%201%20(portfolio))
 
-## 🧩 Features
+##  Features
 - Responsive design
 - Modern layout
 - Easy navigation
 - Showcases projects and skills
 
-## 🛠️ Technologies Used
+##  Technologies Used
 - HTML
 - CSS
 - JavaScript
@@ -25,7 +25,7 @@ A modern and minimal personal portfolio website built using HTML, CSS, and JavaS
   improving product filtering, sorting mechanisms and checkout process
 
   ## 🚀 Live Demo
-[Click here to view the live site](https://amrutha-space.github.io/ShadowFox/)
+[Click here to view the live site](https://github.com/Amrutha-space/ShadowFox/blob/main/TASK-2%20(E-commerce))
 
   
 
